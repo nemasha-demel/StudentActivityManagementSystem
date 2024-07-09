@@ -1,6 +1,6 @@
-import java.io.BufferedWriter;
+
 import java.io.File;
-import java.io.FileWriter;
+
 import java.io.PrintWriter;
 
 import java.util.Scanner;
@@ -13,13 +13,13 @@ public class StudentManagementSystem {
     static int no_of_students = 0;
 
 
-    private void availableSeats(){
+    private static void availableSeats(){
         
         int no_of_seats =  students.length- no_of_students;
         System.out.println("Available seats: "+ no_of_seats);
     }
 
-    private void registerStudent(){
+    private static void registerStudent(){
       
         if (no_of_students==students.length) {
             System.out.println("No available seats");
@@ -37,7 +37,7 @@ public class StudentManagementSystem {
        
     }
 
-    private void deleteStudent(String deleteId){
+    private static void deleteStudent(String deleteId){
         for (int i = 0; i < no_of_students; i++) {
             if (students[i] != null && students[i].getStudentID().equals(deleteId)) {
                 for (int j = i; j < students.length-1; j++) {
@@ -54,7 +54,7 @@ public class StudentManagementSystem {
         
     }
 
-    private void findStudent(String findId){
+    private static void findStudent(String findId){
       for (int i = 0; i < no_of_students; i++) {
         if (students[i] != null && students[i].getStudentID().equals(findId)) {
             System.out.println("Student found: " + students[i].getStudentName() + ", ID: " + students[i].getStudentID());
@@ -68,7 +68,7 @@ public class StudentManagementSystem {
     
     }
 
-    private void storeStudent(){
+    private static void storeStudent(){
         try {
              File output = new File("studentList.txt");
              PrintWriter writer = new PrintWriter(output);
@@ -87,7 +87,7 @@ public class StudentManagementSystem {
         }
     }
 
-    private void loadStudent(){
+    private static void loadStudent(){
         try {
             File input = new File("studentList.txt");
             Scanner in = new Scanner(input);
@@ -100,7 +100,7 @@ public class StudentManagementSystem {
         }
     }
 
-    private void viewStudentList(){
+    private static void viewStudentList(){
         for (int i = 0; i < students.length-1; i++) {
             for (int j= 0;j < students.length-i-1; j++)
             {
@@ -123,7 +123,7 @@ public class StudentManagementSystem {
 
    
 
-    static void moduleMarks(String name){
+    private static void moduleMarks(String name){
 
         for (int i = 0; i < no_of_students; i++) {
             if (students[i] != null && students[i].getStudentName().equals(name)) {
@@ -148,7 +148,7 @@ public class StudentManagementSystem {
 
     }
 
-    static void viewSummary(){
+    private static void viewSummary(){
         System.out.println("Total student registrations: " + no_of_students);
        
         int module1PassCount = 0;
@@ -177,7 +177,7 @@ public class StudentManagementSystem {
         System.out.println("Total students who scored more than 40 in Module 3: " + module3PassCount);
     }
 
-    static void completeReport(){
+    private static void completeReport(){
         System.out.println("Complete Report:");
         System.out.println("------------------------------------------------------------");
         System.out.printf("%-15s %-20s %-15s %-15s %-15s %-15s %-15s\n",
@@ -208,8 +208,83 @@ public class StudentManagementSystem {
 
     }
 
+    private static void showMenu(){
+        sc = new Scanner(System.in);
+        int choice = 0;
+        do {
+            System.out.println("");
+            System.out.println("-------------------------------------");
+            System.out.println("1. Check available seats");
+            System.out.println("2. Register Student with ID");
+            System.out.println("3. Delete student.");
+            System.out.println("4. Find student (with student ID)");
+            System.out.println("5. Store student details");
+            System.out.println("6. Load student details");
+            System.out.println("7. View the list of students");
+            System.out.println("8. View more");
+            System.out.println("9. Exit");
+    
+            System.out.println("-------------------------------------");
+            System.out.println("");
+            System.out.print("Enter your choice: ");
+            choice = sc.nextInt();
+            switch (choice) {
+                case 1:
+                    System.out.println("");
+                    availableSeats();
+                    break;
 
-    private void showMenu(){
+                case 2:
+                    System.out.println("");
+                    registerStudent();
+                    break;
+
+                case 3:
+                    System.out.println("");
+                    System.out.print("Enter Student ID to delete: ");
+                    String deleteId=sc.next();
+                    deleteStudent(deleteId);
+                    break;
+
+                case 4:
+                    System.out.println("");
+                    System.out.print("Enter Student ID to find: ");
+                    String findId = sc.next();
+                    findStudent(findId);
+                    break;
+
+                case 5:
+                    System.out.println("");
+                    storeStudent();
+                    break;
+
+                case 6:
+                    System.out.println("");
+                    sc.nextLine(); 
+                    
+                    
+                    loadStudent();
+                    break;
+
+                case 7:
+              
+                    viewStudentList();
+                    break;
+
+                case 8:
+                    System.out.println("");
+                    showSubMenu();
+                    break;
+
+                default:
+                    break;
+            }
+        } while (choice != 9);
+        
+        sc.close();
+    }
+
+    private static void showSubMenu(){
         char option = 0;
 
         do {
@@ -250,84 +325,10 @@ public class StudentManagementSystem {
 
 
     public static void main(String[] args) {
-        StudentManagementSystem obj=new StudentManagementSystem();
-        sc = new Scanner(System.in);
-        int choice = 0;
+       
         System.out.println("-------------------------------------");
         System.out.println("Welcome to Student Management System.");
-        System.out.println("-------------------------------------");
-       
-        do {
-            System.out.println("");
-           
-            System.out.println("1. Check available seats");
-            System.out.println("2. Register Student with ID");
-            System.out.println("3. Delete student.");
-            System.out.println("4. Find student (with student ID)");
-            System.out.println("5. Store student details");
-            System.out.println("6. Load student details");
-            System.out.println("7. View the list of students");
-            System.out.println("8. View more");
-            System.out.println("9. Exit");
-    
-            System.out.println("-------------------------------------");
-            System.out.println("");
-            System.out.print("Enter your choice: ");
-            choice = sc.nextInt();
-            switch (choice) {
-                case 1:
-                    System.out.println("");
-                    obj.availableSeats();
-                    break;
-
-                case 2:
-                    System.out.println("");
-                    obj.registerStudent();
-                    break;
-
-                case 3:
-                    System.out.println("");
-                    System.out.print("Enter Student ID to delete: ");
-                    String deleteId=sc.next();
-                    obj.deleteStudent(deleteId);
-                    break;
-
-                case 4:
-                    System.out.println("");
-                    System.out.print("Enter Student ID to find: ");
-                    String findId = sc.next();
-                    obj.findStudent(findId);
-                    break;
-
-                case 5:
-                    System.out.println("");
-                    obj.storeStudent();
-                    break;
-
-                case 6:
-                    System.out.println("");
-                    sc.nextLine(); 
-                    
-                    
-                    obj.loadStudent();
-                    break;
-
-                case 7:
-              
-                    obj.viewStudentList();
-                    break;
-
-                case 8:
-                    System.out.println("");
-                    obj.showMenu();
-                    break;
-
-                default:
-                    break;
-            }
-        } while (choice != 9);
-        
-        sc.close();
+        showMenu();  
        
     }
 
