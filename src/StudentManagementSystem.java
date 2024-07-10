@@ -94,6 +94,7 @@ public class StudentManagementSystem {
             while (in.hasNextLine()) {
                String studentDetails = in.nextLine();
                System.out.println(studentDetails); 
+              
             }
         } catch (Exception e) {
             System.out.println("An unexpected error occurred: " + e.getMessage());
@@ -123,10 +124,11 @@ public class StudentManagementSystem {
 
    
 
-    private static void moduleMarks(String name){
+    private static void moduleMarks(String id){
+        boolean studentFound = false;
 
         for (int i = 0; i < no_of_students; i++) {
-            if (students[i] != null && students[i].getStudentName().equals(name)) {
+            if (students[i] != null && students[i].getStudentID().equals(id)) {
                 System.out.print("Enter Module 1 marks: ");
                 int mark1 = sc.nextInt();
                 System.out.print("Enter Module 2 marks: ");
@@ -137,11 +139,13 @@ public class StudentManagementSystem {
                 Module module = new Module(mark1,mark2,mark3);
                 students[i].setModule(module);
                 System.out.println("Saved successfully.");
+                studentFound = true;
                 break; // Once the student is found, we can exit the loop
             }
-            else{
-                System.out.println("Student not found.");
-            }
+            
+        }
+        if (studentFound == false) {
+            System.out.println("Student not found.");
         }
         
        
@@ -299,9 +303,9 @@ public class StudentManagementSystem {
                         switch (option) {
                             case 'a':
                                 System.out.println("");
-                                System.out.print("Enter student name: ");
-                                String stdName = sc.next();
-                                moduleMarks(stdName);
+                                System.out.print("Enter student ID: ");
+                                String stdID = sc.next();
+                                moduleMarks(stdID);
                                 break;
     
                             case 'b':
